@@ -3,6 +3,7 @@ buildCommands_Rivet=(
     "PluginsHEPMC3/RivetJewelGen.so Code/JewelGen.cc"
     "PluginsHEPMC3/RivetJewelGenRap.so Code/JewelGenRap.cc"
     "PluginsHEPMC3/RivetMC_GENERIC_VV.so Code/MC_GENERIC_VV.cc"
+    "-r PluginsHEPMC3/RivetMCChargeAsymmetry.so Code/ChargeAsymmetry.cc"
 #    "PluginsHEPMC3/RivetMC_JETS_VV.so Code/MC_JETS_VV.cc"
 )
 RemoveFromLDPath ()  { 
