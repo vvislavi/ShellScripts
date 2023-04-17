@@ -90,7 +90,7 @@ function GenerateMedium() {
     #3 - Number of processes at once
     PrepareMedium ${1} ${2}
     seedFile="GlobalConfigs/RandomList_Medium"
-    test -f ${3} && seedFile=${3} || GenerateRandomNumbers ${3}${seedFile}
+    test -f ${3} && seedFile=${3} || GenerateRandomNumbers ${3} ${seedFile}
     Parallelize f_GenerateMedium ${seedFile} ${4}
     UnsetJewelPath
     unset seedFile
