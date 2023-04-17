@@ -1,4 +1,5 @@
 function Parallelize() {
+    lStartTime=`date +%s`
     if [ -z ${1} ]
     then
 	echo "Hey there! It seems that you're misusing the function. You should call it with 3 arguments:"
@@ -49,5 +50,16 @@ function Parallelize() {
     do
         wait $pid
     done
-    echo "All finished now!"
+    lStopTime=`date +%s`
+    lSeconds=$(($lStopTime - $lStartTime))
+    lMinutes=$(($lSeconds / 60))
+    lSeconds=$(($lSeconds - ($lMinutes*60)))
+    echo "All finished now! Total time spent: $lMinutes minutes $lSeconds seconds"
+    unset lStartTime
+    unset lStopTime
+    unset lMinutes
+    unset lSeconds
+    unset IFS
+    unset c
+    unset totcnt
 }

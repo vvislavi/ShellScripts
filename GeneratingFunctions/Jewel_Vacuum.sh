@@ -1,3 +1,6 @@
+function SetJWLDataPathPP() {
+    export JWL_Data_Path="/disk/PublicMCTrees/JEWEL/pp/"
+}
 function PrepareVacuum() {
     echo ${1} > GlobalConfigs/cfg_nEvents_Vacuum
 }
@@ -25,12 +28,13 @@ function f_GenerateVacuum() {
     echo "NEVENT ${Nev}" >> ${ConFi}
     mkfifo ${HepFi}
     ./jewel-2.3.0-vac ${ConFi} &
-    rivet --ignore-beams --pwd -a JewelGen ${HepFi}
+    SD=${1} f_Rivet_Skeleton ChargeAsymmetry ${HepFi} RivetData/Out_${1}.yoda
+    #rivet --ignore-beams --pwd -a JewelGen ${HepFi}
 }
 function f_GenerateHEPMCVacuum() {
     rnpf=${1}
     ConFi="RunConfigs/conf_${rnpf}.dat"
-    HepFi="/disk/PublicMCTrees/JEWEL/pp/FiFo_${rnpf}.hepmc"
+    HepFi="${JWL_Data_Path}FiFo_${rnpf}.hepmc"
     LogFi="logs/log_${rnpf}.txt"
     if [ -f GlobalConfigs/cfg_nEvents_Vacuum ]
     then
@@ -52,7 +56,9 @@ function GenerateVacuum() {
     Parallelize f_GenerateVacuum GlobalConfigs/RandomList_Vacuum ${3}
 }
 function GenerateHEPMCVacuum() {
+    SetJWLDataPathPP
     PrepareVacuum ${1}
     GenerateRandomNumbers ${2} GlobalConfigs/RandomList_Vacuum
     Parallelize f_GenerateHEPMCVacuum GlobalConfigs/RandomList_Vacuum ${3}
+    UnsetJWLDataPath
 }
